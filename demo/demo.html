@@ -1,0 +1,23 @@
+<script type="text/javascript" src="../getStackTrace.js"></script>
+<script>
+function test3() {
+    var stackTrace = getStackTrace();
+    for(var i=0,l=stackTrace.length; i<l; i++) {
+        alert("function: "+stackTrace[i].name+
+            "\nfile: "+stackTrace[i].file+
+            "\nline: "+stackTrace[i].line+
+            "\ncolumn: "+stackTrace[i].column);
+    }
+}
+function test2() {
+    (function() {
+        test3();
+    })();
+}
+function test() {
+    test2();
+}
+(function() {
+    test();
+})();
+</script>
