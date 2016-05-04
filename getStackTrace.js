@@ -51,7 +51,6 @@ var getStackTrace = (function() {
         }catch(e){
             if (typeof e.stack !== "undefined") {
                 stack = e.stack.split("\n");
-                console.dir(stack);
                 for(i=2, l=stack.length; i<l; i++) {
                     stackTrace.push(getInfoFromStack(stack[i]));
                 }

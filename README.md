@@ -11,11 +11,37 @@ JS StackTrace allows developers to quickly access to array of current stack trac
 | line     | number    | (Optional) The line in which the function is invoked   |
 | column   | string    | (Optional) The column in which the function is invoked |
   
-The last three properties is optional because in old Internet Explorer browsers there is no detail stack trace available and the caller and caller property are used instead. However, these properties can only give the function name
+The last three properties is optional because in old Internet Explorer browsers there is no detail stack trace available and the ```caller``` and ```caller``` property are used instead. However, these properties can only give the function name
   
+## Usage
+```
+function foo() {
+console.dir(getStackTrace());
+}
+foo();
+```  
+Result:  
+```
+Array[2]
+0: Object
+    column: "13"
+    file: "demo.html"
+    line: "2"
+    name: "foo"
+    __proto__: Object
+1: Object
+    column: "1"
+    file: "demo.html"
+    line: "4"
+    name: "anonymous"
+    __proto__: Object
+length: 2
+__proto__: Object
+```  
+
 ## Known Inconsistency
-* Internet Explorer 11 displays "Anonymous function" if the function invoked is anonymous function while in Chrome will leave the function part empty.
-* Internet Explorer 11 displays "Global code" if the function is invoked in global scope while in Chrome will leave the function part empty.
+* Internet Explorer 11 displays "Anonymous function" if the function invoked is anonymous function while Chrome leaves the function part empty.
+* Internet Explorer 11 displays "Global code" if the function is invoked in global scope while Chrome leaves the function part empty.
 
 ## Browser Support
 * Google Chrome (latest)
