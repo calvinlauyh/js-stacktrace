@@ -77,7 +77,7 @@ var getStackTrace = (function() {
                     if (stack[i].length === 0) {
                         break;
                     }
-                    traceInfo = getInfoFromStack(stack[i]+"c");
+                    traceInfo = getInfoFromStack(stack[i]);
                     /*
                      * Stack Trace format is not a standard and there are 
                      * always inconsistency between browsers and unpredictable 
