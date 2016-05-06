@@ -56,6 +56,9 @@ __proto__: Object
 * Google Chrome on iOS (latest)
   
 ## History
+* 7 May, 2016. Version 1.0.2
+  * Change return value format
+  * Add function document
 * 6 May, 2016. Version 1.0.1
   * Fix for Firefox inconsistency
   * Add fallback logic in case Stack Trace has changes in the future

@@ -5,12 +5,47 @@
  * Copyright (c) 2016 Lau Yu Hei
  * 
  * @author Lau Yu Hei
- * @version 1.0.1
+ * @version 1.0.2
  * @license The MIT License (MIT)
  * https://opensource.org/licenses/MIT
  **/
 
+/**
+ * Generate a stack trace
+ * @return {array|null}     Returns an array of stack trace, or null if the 
+ *                          Stack Trace is in unrecognized format. 
+ */
 var getStackTrace = (function() {
+    /**
+     * This function wrap and return the console object according to the 
+     * current environment support
+     * 
+     * @return {object}     The console object
+     */
+    var _console = function() {
+        /*
+         * console in Internet Explorer prior to 10 is undefined if the 
+         * developer console is not opened
+         */
+        if (typeof console !== "undefined") {
+            /*
+             * console in Internet Explorer prior to 10 does not have 
+             * console.debug
+             */
+            if (typeof console.debug === "undefined") {
+                console.debug = console.log;
+            }
+            return console;
+        } else {
+            return {
+                log: function(message) {}, 
+                info: function(message) {}, 
+                warn: function(message) {}, 
+                error: function(message) {}, 
+                debug: function(message) {}
+            }
+        }
+    }
     // old IE browsers does not support String.trim()
     var _trimRegEx = new RegExp("^\\s+|\\s+$", "g");
     var getFNameFromFString = function(str) {
@@ -39,19 +74,20 @@ var getStackTrace = (function() {
         "^(?:\\s*at\\s?(.*)\\s|(.*)@)" +
         "\\(?(.*):([1-9][0-9]*):([1-9][0-9]*)\\)?$");
     var getInfoFromStack = function(trace) {
-        var groups = trace.match(_traceRegEx);
+        var groups = trace.match(_traceRegEx), 
+            name;
         /*
          * Returns null if nothing matches
          */
         if (groups === null) {
             return null;
         }
+        name = (typeof groups[1]==="undefined")? groups[2]: groups[1];
         return {
-            name: (groups[1]==="")? 
-                ((groups[2]==="")? "anonymous": groups[2]): groups[1], 
-            file: groups[2], 
-            line: groups[3], 
-            column: groups[4]
+            name: (name==="")? "anonymous": name, 
+            file: groups[3], 
+            line: groups[4], 
+            column: groups[5]
         };
     }
     return (function() {
@@ -100,15 +136,15 @@ var getStackTrace = (function() {
             } 
             if (compatibility) {
                 // compatibility mode for old IE and Safari
-                console.log("[Warning] getStackTrace() running in "+
+                _console().error("[Warning] getStackTrace() running in "+
                     "compatibility mode");
                 try {
                     caller = arguments.callee;
                 } catch(e) {
                     // callee and caller are not allowed in strict mode
-                    console.log("[Error] getStackTrace() compatibility "+
-                        "mode cannot be run under strict mode");
-                    return [];
+                    _console().error("[Warning] getStackTrace() "+
+                        "compatibility mode cannot be run in strict mode");
+                    return null;
                 }
                 // loop throught until caller is no longer defined
                 while (caller.caller) {
