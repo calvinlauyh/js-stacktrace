@@ -62,12 +62,10 @@ var getStackTrace = (function() {
      * Possible stack format in Chrome, Opera, Internet Explorer:
      * "TypeError: Cannot set property 'baz' of undefined"
      * "   at getStackTrace (simpli.js:125:13)"
-     * "   at simpli.argcArray (impli.js:1039:33)"
      * "   at basic.js:329:1"
      *
      * Possible stack format in Firefox:
      * "getStackTrace@simpli.js:125:13"
-     * "simpli.argcArray@simpli.js:1039:33"
      * "@basic.js:329:1"
      */
     var _traceRegEx = new RegExp(
