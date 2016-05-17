@@ -5,7 +5,7 @@
  * Copyright (c) 2016 Yu H.
  * 
  * @author Yu H.
- * @version 1.0.2
+ * @version 1.0.3
  * @license The MIT License (MIT)
  * https://opensource.org/licenses/MIT
  **/
@@ -82,7 +82,7 @@ var getStackTrace = (function() {
         }
         name = (typeof groups[1]==="undefined")? groups[2]: groups[1];
         return {
-            name: (name==="")? "anonymous": name, 
+            invokedBy: (name==="")? "anonymous": name, 
             file: groups[3], 
             line: groups[4], 
             column: groups[5]
@@ -126,7 +126,7 @@ var getStackTrace = (function() {
                      * In non-Firefox browsers, the first stacktrace is the 
                      * TypeError message
                      */
-                    if (traceInfo.name === "getStackTrace") {
+                    if (traceInfo.invokedBy === "getStackTrace") {
                         continue;
                     }
                     stackTrace.push(traceInfo);
@@ -148,7 +148,7 @@ var getStackTrace = (function() {
                 while (caller.caller) {
                     caller = caller.caller;
                     stackTrace.push({
-                        name: getFNameFromFString(caller), 
+                        invokedBy: getFNameFromFString(caller), 
                         file: undefined, 
                         line: undefined, 
                         column: undefined

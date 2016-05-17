@@ -56,6 +56,8 @@ __proto__: Object
 * Google Chrome on iOS (latest)
   
 ## History
+* 17 May, 2016. Version 1.0.3
+  * Renamte property 'name' in stack trace to 'invokedBy'
 * 7 May, 2016. Version 1.0.2
   * Change return value format
   * Add function document
@@ -66,5 +68,5 @@ __proto__: Object
   * First published
   
 ## License
-Copyright (c) Lau Yu Hei  
+Copyright (c) Yu H.
 Published under The MIT License (MIT)
